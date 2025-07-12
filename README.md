@@ -2,7 +2,7 @@
 
 SoulSync is an innovative web application that enables users to have meaningful conversations with their future selves using AI. By combining personal memories, goals, and experiences, the app creates an authentic dialogue experience that provides guidance and wisdom.
 
-soulsync-90cbg26qv-rjs-projects-185b3f2f.vercel.app
+https://soulsync-90cbg26qv-rjs-projects-185b3f2f.vercel.app
 
 ## Features
 
