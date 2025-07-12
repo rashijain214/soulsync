@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Send, Brain, User, Volume2, VolumeX, Shield } from "lucide-react";
+import { ArrowLeft, Send, Brain, User, Volume2, VolumeX, Shield, Settings, Home } from "lucide-react";
 import Link from "next/link";
 import { formatMemoryProfile } from "@/lib/memory-formatter";
 
@@ -161,148 +161,192 @@ export default function Chat() {
   }
 
   return (
-    <div className="min-h-screen apple-hero">
-      {/* Header */}
-      <header className="sticky top-0 z-50 secure-nav apple-blur">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/">
-              <Button variant="ghost" className="flex items-center gap-2 calm-text hover:text-blue-600 transition-colors">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Home
-              </Button>
-            </Link>
-            <div className="flex items-center gap-3">
-              <div className="apple-icon">
-                <Brain className="w-5 h-5 text-blue-600" />
-              </div>
-              <div className="text-center">
-                <h1 className="text-lg font-bold security-accent">Chat with Future Self</h1>
-                <div className="flex items-center justify-center space-x-2">
-                  <Shield className="w-3 h-3 text-emerald-600" />
-                  <p className="text-xs text-emerald-600 font-medium">Secure & Private</p>
-                </div>
+    <div className="min-h-screen apple-hero flex">
+      {/* Side Navigation */}
+      <div className="fixed left-0 top-0 h-full w-80 secure-nav apple-blur border-r border-slate-200/60 z-50">
+        <div className="flex flex-col h-full p-6">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="apple-icon">
+              <Brain className="w-6 h-6 text-blue-600" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold security-accent">SoulSync</h1>
+              <div className="flex items-center space-x-2">
+                <Shield className="w-3 h-3 text-emerald-600" />
+                <p className="text-xs text-emerald-600 font-medium">Secure & Private</p>
               </div>
             </div>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="space-y-2 mb-8">
+            <Link href="/">
+              <Button variant="ghost" className="w-full justify-start gap-3 calm-text hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                <Home className="w-4 h-4" />
+                Home
+              </Button>
+            </Link>
             <Link href="/setup">
-              <Button variant="outline" className="trust-border text-blue-700 hover:bg-blue-50 hover:border-blue-300">
+              <Button variant="ghost" className="w-full justify-start gap-3 calm-text hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                <Settings className="w-4 h-4" />
                 Update Memory
               </Button>
             </Link>
           </div>
+
+          {/* Chat Info */}
+          <div className="apple-card rounded-2xl p-4 mb-6">
+            <h3 className="font-semibold text-slate-800 mb-2">Chat with Future Self</h3>
+            <p className="text-sm calm-text mb-3">
+              Your AI guide trained on your experiences and goals.
+            </p>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-slate-500">Messages: {messages.length}</span>
+              <div className="flex items-center space-x-1">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span className="text-emerald-600">Online</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Security Notice */}
+          <div className="mt-auto apple-card rounded-2xl p-4 bg-gradient-to-br from-emerald-50 to-blue-50">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield className="w-4 h-4 text-emerald-600" />
+              <span className="text-sm font-medium text-emerald-700">End-to-End Encryption</span>
+            </div>
+            <p className="text-xs text-emerald-600">
+              Your conversations are encrypted and stored locally. We never access your personal data.
+            </p>
+          </div>
         </div>
-      </header>
+      </div>
 
-      {/* Chat Container */}
-      <div className="container mx-auto px-6 py-8 max-w-4xl">
-        {/* Messages */}
-        <div className="space-y-6 mb-8">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div className={`flex items-start gap-4 max-w-[85%] ${message.type === 'user' ? 'flex-row-reverse' : ''}`}>
-                {/* Avatar */}
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  message.type === 'user' 
-                    ? 'bg-slate-700' 
-                    : 'bg-gradient-to-br from-blue-600 to-blue-700'
-                }`}>
-                  {message.type === 'user' ? (
-                    <User className="w-5 h-5 text-white" />
-                  ) : (
-                    <Brain className="w-5 h-5 text-white" />
-                  )}
-                </div>
+      {/* Main Chat Area */}
+      <div className="flex-1 ml-80 flex flex-col">
+        {/* Chat Header */}
+        <div className="sticky top-0 z-40 secure-nav apple-blur border-b border-slate-200/60 px-8 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold security-accent">Active Session</h2>
+              <p className="text-sm text-slate-600">Connected to your future self</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-green-600 font-medium">Live</span>
+            </div>
+          </div>
+        </div>
 
-                {/* Message Content */}
-                <div className={`flex-1 ${message.type === 'user' ? 'items-end' : 'items-start'}`}>
-                  <div className={`apple-card rounded-3xl p-6 ${
-                    message.type === 'user' 
-                      ? 'bg-gradient-to-br from-slate-700 to-slate-800 text-white border-slate-600' 
-                      : 'bg-white text-slate-800'
-                  }`}>
-                    <p className="text-base leading-relaxed whitespace-pre-wrap">
-                      {message.content}
-                    </p>
-                    
-                    {/* Timestamp and Actions */}
-                    <div className={`flex items-center gap-2 mt-4 ${
-                      message.type === 'user' ? 'justify-end' : 'justify-between'
+        {/* Messages Container */}
+        <div className="flex-1 overflow-y-auto px-8 py-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-6 mb-8">
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div className={`flex items-start gap-4 max-w-[75%] ${message.type === 'user' ? 'flex-row-reverse' : ''}`}>
+                    {/* Avatar */}
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      message.type === 'user' 
+                        ? 'bg-slate-700' 
+                        : 'bg-gradient-to-br from-blue-600 to-blue-700'
                     }`}>
-                      <time className={`text-xs ${
-                        message.type === 'user' ? 'text-slate-300' : 'text-slate-500'
-                      }`}>
-                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </time>
-                      
-                      {message.type === 'assistant' && (
-                        <button
-                          onClick={() => speakMessage(message.content)}
-                          className="p-1 rounded-full hover:bg-blue-50 transition-colors"
-                        >
-                          {isSpeaking ? (
-                            <VolumeX className="w-4 h-4 text-blue-600" />
-                          ) : (
-                            <Volume2 className="w-4 h-4 text-blue-600" />
-                          )}
-                        </button>
+                      {message.type === 'user' ? (
+                        <User className="w-5 h-5 text-white" />
+                      ) : (
+                        <Brain className="w-5 h-5 text-white" />
                       )}
+                    </div>
+
+                    {/* Message Content */}
+                    <div className={`flex-1 ${message.type === 'user' ? 'items-end' : 'items-start'}`}>
+                      <div className={`apple-card rounded-3xl p-6 ${
+                        message.type === 'user' 
+                          ? 'bg-gradient-to-br from-slate-700 to-slate-800 text-white border-slate-600' 
+                          : 'bg-white text-slate-800'
+                      }`}>
+                        <p className="text-base leading-relaxed whitespace-pre-wrap">
+                          {message.content}
+                        </p>
+                        
+                        {/* Timestamp and Actions */}
+                        <div className={`flex items-center gap-2 mt-4 ${
+                          message.type === 'user' ? 'justify-end' : 'justify-between'
+                        }`}>
+                          <time className={`text-xs ${
+                            message.type === 'user' ? 'text-slate-300' : 'text-slate-500'
+                          }`}>
+                            {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </time>
+                          
+                          {message.type === 'assistant' && (
+                            <button
+                              onClick={() => speakMessage(message.content)}
+                              className="p-1 rounded-full hover:bg-blue-50 transition-colors"
+                            >
+                              {isSpeaking ? (
+                                <VolumeX className="w-4 h-4 text-blue-600" />
+                              ) : (
+                                <Volume2 className="w-4 h-4 text-blue-600" />
+                              )}
+                            </button>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
-          
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="flex items-start gap-4 max-w-[85%]">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                  <Brain className="w-5 h-5 text-white" />
-                </div>
-                <div className="apple-card rounded-3xl p-6 bg-white">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-                    <span className="text-sm calm-text ml-2">Your future self is thinking...</span>
+              ))}
+              
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="flex items-start gap-4 max-w-[75%]">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+                      <Brain className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="apple-card rounded-3xl p-6 bg-white">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                        <span className="text-sm calm-text ml-2">Your future self is thinking...</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
+              
+              <div ref={messagesEndRef} />
             </div>
-          )}
-          
-          <div ref={messagesEndRef} />
+          </div>
         </div>
 
         {/* Message Input */}
-        <div className="sticky bottom-0 z-40 secure-nav apple-blur px-6 py-4 -mx-6 rounded-2xl">
-          <div className="flex gap-4 items-end">
-            <div className="flex-1">
-              <Textarea
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask your future self anything..."
-                className="min-h-[60px] max-h-[120px] resize-none trust-border focus:border-blue-500 focus:ring-blue-500 rounded-2xl px-4 py-3 text-base bg-white/90"
-                disabled={isLoading}
-              />
+        <div className="sticky bottom-0 z-40 secure-nav apple-blur border-t border-slate-200/60 px-8 py-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex gap-4 items-end">
+              <div className="flex-1">
+                <Textarea
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Ask your future self anything..."
+                  className="min-h-[60px] max-h-[120px] resize-none trust-border focus:border-blue-500 focus:ring-blue-500 rounded-2xl px-4 py-3 text-base bg-white/90"
+                  disabled={isLoading}
+                />
+              </div>
+              <Button
+                onClick={sendMessage}
+                disabled={!input.trim() || isLoading}
+                className="apple-button w-12 h-12 rounded-full p-0 flex items-center justify-center"
+              >
+                <Send className="w-5 h-5 text-white" />
+              </Button>
             </div>
-            <Button
-              onClick={sendMessage}
-              disabled={!input.trim() || isLoading}
-              className="apple-button w-12 h-12 rounded-full p-0 flex items-center justify-center"
-            >
-              <Send className="w-5 h-5 text-white" />
-            </Button>
-          </div>
-          
-          {/* Security Note */}
-          <div className="flex items-center justify-center mt-3 space-x-2">
-            <Shield className="w-3 h-3 text-emerald-600" />
-            <span className="text-xs text-emerald-600 font-medium">Your conversations are private and secure</span>
           </div>
         </div>
       </div>

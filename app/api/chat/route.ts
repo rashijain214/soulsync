@@ -14,7 +14,9 @@ export async function POST(request: NextRequest) {
       apiKey: process.env.OPENAI_API_KEY,
       baseURL: 'https://openrouter.ai/api/v1',
       defaultHeaders: {
-        'HTTP-Referer': 'http://localhost:3000',
+        'HTTP-Referer': process.env.NODE_ENV === 'production' 
+          ? 'https://soulsync-rashijain214.vercel.app' 
+          : 'http://localhost:3000',
         'X-Title': 'SoulSync',
       },
     });
