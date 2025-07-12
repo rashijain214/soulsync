@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Send, Brain, User, Volume2, VolumeX } from "lucide-react";
+import { ArrowLeft, Send, Brain, User, Volume2, VolumeX, Shield } from "lucide-react";
 import Link from "next/link";
 import { formatMemoryProfile } from "@/lib/memory-formatter";
 
@@ -42,7 +42,7 @@ export default function Chat() {
       const welcomeMessage: Message = {
         id: Date.now().toString(),
         type: 'assistant',
-        content: "Hello! I'm your future self - wiser, more experienced, and here to help guide you. I've been reflecting on everything you've shared about your journey so far. What would you like to talk about today?",
+        content: "Hello! I'm your future self — wiser, more experienced, and here to help guide you. I've been reflecting on everything you've shared about your journey so far. What would you like to talk about today?",
         timestamp: new Date()
       };
       setMessages([welcomeMessage]);
@@ -141,146 +141,170 @@ export default function Chat() {
 
   if (!memoryProfile) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center">
-        <Card className="max-w-md mx-auto border-0 shadow-lg">
-          <CardContent className="text-center p-8">
-            <Brain className="w-16 h-16 text-indigo-600 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">No Memory Profile Found</h2>
-            <p className="text-gray-600 mb-6">You need to create your memory profile before you can chat with your future self.</p>
-            <Link href="/setup">
-              <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white">
-                Create Memory Profile
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen apple-hero flex items-center justify-center">
+        <div className="apple-card max-w-md mx-auto rounded-3xl p-8 text-center">
+          <div className="apple-icon mx-auto mb-6">
+            <Brain className="w-8 h-8 text-blue-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">No Memory Profile Found</h2>
+          <p className="calm-text mb-8 leading-relaxed">
+            You need to create your memory profile before you can chat with your future self.
+          </p>
+          <Link href="/setup">
+            <button className="apple-button px-6 py-3 relative z-10">
+              <span className="relative z-10">Create Memory Profile</span>
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-      <div className="container mx-auto px-4 py-4 max-w-4xl">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <Link href="/">
-            <Button variant="ghost" className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </Button>
-          </Link>
-          <div className="flex items-center gap-2">
-            <Brain className="w-6 h-6 text-indigo-600" />
-            <span className="font-semibold text-gray-900">Chat with Future Self</span>
+    <div className="min-h-screen apple-hero">
+      {/* Header */}
+      <header className="sticky top-0 z-50 secure-nav apple-blur">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/">
+              <Button variant="ghost" className="flex items-center gap-2 calm-text hover:text-blue-600 transition-colors">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Home
+              </Button>
+            </Link>
+            <div className="flex items-center gap-3">
+              <div className="apple-icon">
+                <Brain className="w-5 h-5 text-blue-600" />
+              </div>
+              <div className="text-center">
+                <h1 className="text-lg font-bold security-accent">Chat with Future Self</h1>
+                <div className="flex items-center justify-center space-x-2">
+                  <Shield className="w-3 h-3 text-emerald-600" />
+                  <p className="text-xs text-emerald-600 font-medium">Secure & Private</p>
+                </div>
+              </div>
+            </div>
+            <Link href="/setup">
+              <Button variant="outline" className="trust-border text-blue-700 hover:bg-blue-50 hover:border-blue-300">
+                Update Memory
+              </Button>
+            </Link>
           </div>
-          <Link href="/setup">
-            <Button variant="outline" size="sm">
-              Update Memory
-            </Button>
-          </Link>
         </div>
+      </header>
 
-        {/* Chat Messages */}
-        <div className="flex-1 mb-6">
-          <div className="space-y-4 mb-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div className={`flex items-start gap-3 max-w-[80%] ${message.type === 'user' ? 'flex-row-reverse' : ''}`}>
-                  {/* Avatar */}
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+      {/* Chat Container */}
+      <div className="container mx-auto px-6 py-8 max-w-4xl">
+        {/* Messages */}
+        <div className="space-y-6 mb-8">
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div className={`flex items-start gap-4 max-w-[85%] ${message.type === 'user' ? 'flex-row-reverse' : ''}`}>
+                {/* Avatar */}
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                  message.type === 'user' 
+                    ? 'bg-slate-700' 
+                    : 'bg-gradient-to-br from-blue-600 to-blue-700'
+                }`}>
+                  {message.type === 'user' ? (
+                    <User className="w-5 h-5 text-white" />
+                  ) : (
+                    <Brain className="w-5 h-5 text-white" />
+                  )}
+                </div>
+
+                {/* Message Content */}
+                <div className={`flex-1 ${message.type === 'user' ? 'items-end' : 'items-start'}`}>
+                  <div className={`apple-card rounded-3xl p-6 ${
                     message.type === 'user' 
-                      ? 'bg-gradient-to-br from-gray-400 to-gray-600' 
-                      : 'bg-gradient-to-br from-indigo-500 to-purple-600'
+                      ? 'bg-gradient-to-br from-slate-700 to-slate-800 text-white border-slate-600' 
+                      : 'bg-white text-slate-800'
                   }`}>
-                    {message.type === 'user' ? (
-                      <User className="w-5 h-5 text-white" />
-                    ) : (
-                      <Brain className="w-5 h-5 text-white" />
-                    )}
-                  </div>
-
-                  {/* Message Bubble */}
-                  <div className={`rounded-2xl px-4 py-3 ${
-                    message.type === 'user'
-                      ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white'
-                      : 'bg-white shadow-md border'
-                  }`}>
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
-                    <div className="flex items-center justify-between mt-2">
-                      <span className={`text-xs ${
-                        message.type === 'user' ? 'text-indigo-100' : 'text-gray-500'
+                    <p className="text-base leading-relaxed whitespace-pre-wrap">
+                      {message.content}
+                    </p>
+                    
+                    {/* Timestamp and Actions */}
+                    <div className={`flex items-center gap-2 mt-4 ${
+                      message.type === 'user' ? 'justify-end' : 'justify-between'
+                    }`}>
+                      <time className={`text-xs ${
+                        message.type === 'user' ? 'text-slate-300' : 'text-slate-500'
                       }`}>
                         {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </span>
+                      </time>
+                      
                       {message.type === 'assistant' && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
+                        <button
                           onClick={() => speakMessage(message.content)}
-                          className="h-6 w-6 p-0 ml-2"
+                          className="p-1 rounded-full hover:bg-blue-50 transition-colors"
                         >
                           {isSpeaking ? (
-                            <VolumeX className="w-3 h-3 text-gray-500" />
+                            <VolumeX className="w-4 h-4 text-blue-600" />
                           ) : (
-                            <Volume2 className="w-3 h-3 text-gray-500" />
+                            <Volume2 className="w-4 h-4 text-blue-600" />
                           )}
-                        </Button>
+                        </button>
                       )}
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="flex items-start gap-3 max-w-[80%]">
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <Brain className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="bg-white shadow-md border rounded-2xl px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      </div>
-                      <span className="text-sm text-gray-500">Your future self is thinking...</span>
-                    </div>
+            </div>
+          ))}
+          
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="flex items-start gap-4 max-w-[85%]">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-white" />
+                </div>
+                <div className="apple-card rounded-3xl p-6 bg-white">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    <span className="text-sm calm-text ml-2">Your future self is thinking...</span>
                   </div>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+          
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Area */}
-        <Card className="border-0 shadow-lg">
-          <CardContent className="p-4">
-            <div className="flex gap-3">
+        {/* Message Input */}
+        <div className="sticky bottom-0 z-40 secure-nav apple-blur px-6 py-4 -mx-6 rounded-2xl">
+          <div className="flex gap-4 items-end">
+            <div className="flex-1">
               <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask your future self anything... (Press Enter to send, Shift+Enter for new line)"
-                className="resize-none border-gray-200 focus:border-indigo-300 focus:ring-indigo-200"
-                rows={1}
+                placeholder="Ask your future self anything..."
+                className="min-h-[60px] max-h-[120px] resize-none trust-border focus:border-blue-500 focus:ring-blue-500 rounded-2xl px-4 py-3 text-base bg-white/90"
                 disabled={isLoading}
               />
-              <Button
-                onClick={sendMessage}
-                disabled={!input.trim() || isLoading}
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6"
-              >
-                <Send className="w-4 h-4" />
-              </Button>
             </div>
-          </CardContent>
-        </Card>
+            <Button
+              onClick={sendMessage}
+              disabled={!input.trim() || isLoading}
+              className="apple-button w-12 h-12 rounded-full p-0 flex items-center justify-center"
+            >
+              <Send className="w-5 h-5 text-white" />
+            </Button>
+          </div>
+          
+          {/* Security Note */}
+          <div className="flex items-center justify-center mt-3 space-x-2">
+            <Shield className="w-3 h-3 text-emerald-600" />
+            <span className="text-xs text-emerald-600 font-medium">Your conversations are private and secure</span>
+          </div>
+        </div>
       </div>
     </div>
   );
