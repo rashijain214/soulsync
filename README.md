@@ -2,6 +2,8 @@
 
 SoulSync is an innovative web application that enables users to have meaningful conversations with their future selves using AI. By combining personal memories, goals, and experiences, the app creates an authentic dialogue experience that provides guidance and wisdom.
 
+soulsync-90cbg26qv-rjs-projects-185b3f2f.vercel.app
+
 ## Features
 
 - **Memory Profile Creation**: Upload resume, goals, and journal entries to build a comprehensive personal profile
@@ -73,14 +75,6 @@ SoulSync is an innovative web application that enables users to have meaningful 
 2. Connect your repository to Vercel
 3. Add environment variables in Vercel dashboard
 4. Deploy automatically
-
-### Other Platforms
-
-The app can be deployed to any platform that supports Next.js:
-- Netlify
-- Railway
-- DigitalOcean App Platform
-- AWS Amplify
 
 ## API Endpoints
 
