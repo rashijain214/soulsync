@@ -141,7 +141,7 @@ export default function Chat() {
 
   if (!memoryProfile) {
     return (
-      <div className="min-h-screen apple-hero flex items-center justify-center">
+      <div className="min-h-screen apple-hero flex items-center justify-center px-4">
         <div className="apple-card max-w-md mx-auto rounded-3xl p-8 text-center">
           <div className="apple-icon mx-auto mb-6">
             <Brain className="w-8 h-8 text-blue-600" />
@@ -161,9 +161,22 @@ export default function Chat() {
   }
 
   return (
-    <div className="min-h-screen apple-hero flex">
-      {/* Side Navigation */}
-      <div className="fixed left-0 top-0 h-full w-80 secure-nav apple-blur border-r border-slate-200/60 z-50">
+    <div className="min-h-screen apple-hero flex relative">
+      {/* Mobile Back Button */}
+      <div className="md:hidden fixed top-4 left-4 z-50">
+        <Link href="/">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            className="apple-card rounded-full p-2 bg-white/90 backdrop-blur-md border border-slate-200/60 hover:bg-white hover:border-blue-300 transition-all duration-200 shadow-sm"
+          >
+            <ArrowLeft className="w-4 h-4 text-slate-600" />
+          </Button>
+        </Link>
+      </div>
+
+      {/* Desktop Side Navigation */}
+      <div className="hidden md:block fixed left-0 top-0 h-full w-80 secure-nav apple-blur border-r border-slate-200/60 z-50">
         <div className="flex flex-col h-full p-6">
           {/* Header */}
           <div className="flex items-center gap-3 mb-8">
@@ -224,9 +237,9 @@ export default function Chat() {
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 ml-80 flex flex-col">
-        {/* Chat Header */}
-        <div className="sticky top-0 z-40 secure-nav apple-blur border-b border-slate-200/60 px-8 py-4">
+      <div className="flex-1 md:ml-80 flex flex-col">
+        {/* Desktop Chat Header */}
+        <div className="hidden md:block sticky top-0 z-40 secure-nav apple-blur border-b border-slate-200/60 px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-bold security-accent">Active Session</h2>
@@ -240,7 +253,7 @@ export default function Chat() {
         </div>
 
         {/* Messages Container */}
-        <div className="flex-1 overflow-y-auto px-8 py-6">
+        <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6">
           <div className="max-w-4xl mx-auto">
             <div className="space-y-6 mb-8">
               {messages.map((message) => (
@@ -248,33 +261,33 @@ export default function Chat() {
                   key={message.id}
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`flex items-start gap-4 max-w-[75%] ${message.type === 'user' ? 'flex-row-reverse' : ''}`}>
+                  <div className={`flex items-start gap-3 max-w-[85%] md:max-w-[75%] ${message.type === 'user' ? 'flex-row-reverse' : ''}`}>
                     {/* Avatar */}
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                       message.type === 'user' 
                         ? 'bg-slate-700' 
                         : 'bg-gradient-to-br from-blue-600 to-blue-700'
                     }`}>
                       {message.type === 'user' ? (
-                        <User className="w-5 h-5 text-white" />
+                        <User className="w-4 h-4 md:w-5 md:h-5 text-white" />
                       ) : (
-                        <Brain className="w-5 h-5 text-white" />
+                        <Brain className="w-4 h-4 md:w-5 md:h-5 text-white" />
                       )}
                     </div>
 
                     {/* Message Content */}
                     <div className={`flex-1 ${message.type === 'user' ? 'items-end' : 'items-start'}`}>
-                      <div className={`apple-card rounded-3xl p-6 ${
+                      <div className={`apple-card rounded-2xl md:rounded-3xl p-4 md:p-6 ${
                         message.type === 'user' 
                           ? 'bg-gradient-to-br from-slate-700 to-slate-800 text-white border-slate-600' 
                           : 'bg-white text-slate-800'
                       }`}>
-                        <p className="text-base leading-relaxed whitespace-pre-wrap">
+                        <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
                           {message.content}
                         </p>
                         
                         {/* Timestamp and Actions */}
-                        <div className={`flex items-center gap-2 mt-4 ${
+                        <div className={`flex items-center gap-2 mt-3 md:mt-4 ${
                           message.type === 'user' ? 'justify-end' : 'justify-between'
                         }`}>
                           <time className={`text-xs ${
@@ -289,9 +302,9 @@ export default function Chat() {
                               className="p-1 rounded-full hover:bg-blue-50 transition-colors"
                             >
                               {isSpeaking ? (
-                                <VolumeX className="w-4 h-4 text-blue-600" />
+                                <VolumeX className="w-3 h-3 md:w-4 md:h-4 text-blue-600" />
                               ) : (
-                                <Volume2 className="w-4 h-4 text-blue-600" />
+                                <Volume2 className="w-3 h-3 md:w-4 md:h-4 text-blue-600" />
                               )}
                             </button>
                           )}
@@ -304,11 +317,11 @@ export default function Chat() {
               
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="flex items-start gap-4 max-w-[75%]">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
-                      <Brain className="w-5 h-5 text-white" />
+                  <div className="flex items-start gap-3 max-w-[85%] md:max-w-[75%]">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+                      <Brain className="w-4 h-4 md:w-5 md:h-5 text-white" />
                     </div>
-                    <div className="apple-card rounded-3xl p-6 bg-white">
+                    <div className="apple-card rounded-2xl md:rounded-3xl p-4 md:p-6 bg-white">
                       <div className="flex items-center gap-2">
                         <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
                         <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
@@ -326,25 +339,25 @@ export default function Chat() {
         </div>
 
         {/* Message Input */}
-        <div className="sticky bottom-0 z-40 secure-nav apple-blur border-t border-slate-200/60 px-8 py-6">
+        <div className="sticky bottom-0 z-40 secure-nav apple-blur border-t border-slate-200/60 px-4 md:px-8 py-4 md:py-6">
           <div className="max-w-4xl mx-auto">
-            <div className="flex gap-4 items-end">
+            <div className="flex gap-3 md:gap-4 items-end">
               <div className="flex-1">
                 <Textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask your future self anything..."
-                  className="min-h-[60px] max-h-[120px] resize-none trust-border focus:border-blue-500 focus:ring-blue-500 rounded-2xl px-4 py-3 text-base bg-white/90"
+                  className="min-h-[50px] md:min-h-[60px] max-h-[120px] resize-none trust-border focus:border-blue-500 focus:ring-blue-500 rounded-xl md:rounded-2xl px-3 md:px-4 py-2 md:py-3 text-sm md:text-base bg-white/90"
                   disabled={isLoading}
                 />
               </div>
               <Button
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
-                className="apple-button w-12 h-12 rounded-full p-0 flex items-center justify-center"
+                className="apple-button w-10 h-10 md:w-12 md:h-12 rounded-full p-0 flex items-center justify-center"
               >
-                <Send className="w-5 h-5 text-white" />
+                <Send className="w-4 h-4 md:w-5 md:h-5 text-white" />
               </Button>
             </div>
           </div>
