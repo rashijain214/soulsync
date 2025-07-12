@@ -31,7 +31,7 @@ SoulSync generates a GPT-4-powered version of your future self who understands y
 Your future self already knows what matters. SoulSync helps you find out.
 
 
-https://soulsync-90cbg26qv-rjs-projects-185b3f2f.vercel.app
+https://soulsync-rashijain214.vercel.app
 
 ## Features
 
