@@ -5,13 +5,18 @@ export async function POST(request: NextRequest) {
   try {
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json(
-        { error: 'OpenAI API key not configured. Please add OPENAI_API_KEY to your .env.local file.' },
+        { error: 'OpenRouter API key not configured. Please add OPENAI_API_KEY to your .env.local file.' },
         { status: 500 }
       );
     }
 
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
+      baseURL: 'https://openrouter.ai/api/v1',
+      defaultHeaders: {
+        'HTTP-Referer': 'http://localhost:3000',
+        'X-Title': 'SoulSync',
+      },
     });
 
     const { message, memoryProfile, conversationHistory } = await request.json();
@@ -51,7 +56,7 @@ GUIDELINES:
     ];
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4',
+      model: 'mistralai/devstral-small',
       messages,
       max_tokens: 500,
       temperature: 0.7,
